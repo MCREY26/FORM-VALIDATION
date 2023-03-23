@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Form Validation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"/>
+
+      <style>
+        * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+body {
+  background-color:;
+}
+.container {
+  width: 80vw;
+  max-width: 1000px;
+  padding: 3em 1.5em;
+  background-color: #ffffff;
+  margin: 1em auto;
+  border-radius: 0.5em;
+}
+h3 {
+  font-size: 1.5em;
+}
+.input-section {
+  margin: 0.5em 0;
+}
+label,
+.error-message {
+  display: block;
+  font-size: 1em;
+}
+label {
+  margin-bottom: 0.5em;
+  font-weight: 500;
+  
+}
+.error-message {
+  margin-top: 0.2em;
+}
+input,
+button {
+  display: block;
+  outline: none;
+  width: 100%;
+  padding: 0.5em;
+  border-radius: 0.3em;
+}
+input{
+  padding: 1em 0.5em;
+  border: 1.5px solid #d0d0d0;
+}
+button {
+  font-size: 1em;
+  background-color: #4682B4;
+  border: none;
+  color: #ffffff;
+  padding: 0.8em 0;
+  margin-top: 1em;
+  width: 100px;
+  float: right;
+}
+.required-color {
+  color: #ff4747;
+}
+.error {
+  border-color: #ff4747;
+}
+.valid {
+  border-color: #37a137;
+}
+.hide {
+  display: none;
+}
+.checkbox{
+  float: left;
+}
+      </style>
+
+  </head>
+  <body>
+    <div>
+    <div class="container">
+      <form autocomplete="off">
+        <h2></h2>
+        <h3><center>Register</h3><br>
+       <div>
+        <P>Please provide your contact information.We will send you a copy of your appointment sheet via email and call you on your mobile phone for any urgent updates.</P>
+        </div>
+        <div class="input-section">
+          <label>First Name <span class="required-color">*</span></label>
+          <input
+            type="text"
+            placeholder="Enter First Name"
+            id="first-name-input"
+            required
+          />
+          <span id="first-name-error" class="hide required-color error-message"
+            >Invalid Input</span
+          >
+          <span id="empty-first-name" class="hide required-color error-message"
+            >First Name Cannot Be Empty</span
+          >
+        </div>
+        <div>
+        <label>Middle Name <span class="required-color">*</span></label>
+          <input
+            type="text"
+            placeholder="Enter Middle Name"
+            id="middle-name-input"
+            required
+          />
+          <span id="middle-name-error" class="hide required-color error-message"
+            >Invalid Input</span
+          >
+          <span id="empty-middle-name" class="hide required-color error-message"
+            >middle Name Cannot Be Empty</span
+          >
+        </div>
+        <div class="input-section">
+          <label>Last Name<span class="required-color">*</span></label>
+          <input
+            type="text "
+            placeholder="Enter Last Name"
+            id="last-name-input"
+            required
+          />
+          <span id="last-name-error" class="hide required-color error-message"
+            >Invalid Input</span
+          >
+          <span id="empty-last-name" class="hide required-color error-message">
+            Last Name Cannot Be Empty
+          </span>
+        </div>
+
+        <div class="input-section">
+          <label>Email <span class="required-color">*</span></label>
+          <input type="email" placeholder="Enter Email" id="email" required />
+          <span id="email-error" class="hide required-color error-message"
+            >Invalid Email</span
+          >
+          <span id="empty-email" class="hide required-color error-message"
+            >Email Cannot Be Empty</span
+          >
+        </div>
+
+        <div class="input-section">
+          <label>Mobile Number-Optional<span class="required-color">*</span></label>
+          <input
+            type="text"
+            placeholder="Enter Phone Number"
+            id="phone"
+            required
+          />
+          <span id="phone-error" class="hide required-color error-message"
+            >Phone Number Should Have 10 Digits</span
+          >
+          <span id="empty-phone" class="hide required-color error-message">
+            Phone cannot be empty
+          </span>
+        </div>
+        <button id="submit-button">Next</button>
+      </form>
+    </div>
+
+    <script>
+      //First Name
+let firstNameInput = document.getElementById("first-name-input");
+let firstNameError = document.getElementById("first-name-error");
+let emptyFirstNameError = document.getElementById("empty-first-name");
+
+//Middle Name
+let middleNameInput = document.getElementById("middle-name-input");
+let middleNameError = document.getElementById("middle-name-error");
+let emptymiddleNameError = document.getElementById("empty-middle-name");
+
+
+//Last name
+let lastNameInput = document.getElementById("last-name-input");
+let lastNameError = document.getElementById("last-name-error");
+let emptyLastNameError = document.getElementById("empty-last-name");
+//Email
+let emailInput = document.getElementById("email");
+let emailError = document.getElementById("email-error");
+let emptyEmailError = document.getElementById("empty-email");
+
+//Phone
+let phoneInput = document.getElementById("phone");
+let phoneError = document.getElementById("phone-error");
+let emptyPhoneError = document.getElementById("empty-phone");
+
+//Submit
+let submitButton = document.getElementById("submit-button");
+
+//Valid
+let validClasses = document.getElementsByClassName("valid");
+let invalidClasses = document.getElementsByClassName("error");
+
+//Text verification (if input contains only text)
+const textVerify = (text) => {
+  const regex = /^[a-zA-Z]{5,}$/;
+  return regex.test(text);
+};
+
+//Phone number verification
+const phoneVerify = (number) => {
+  const regex = /^[0-9]{10}$/;
+  return regex.test(number);
+};
+
+//Email verification
+const emailVerify = (input) => {
+  const regex = /^[a-z0-9_]+@[a-z]{3,}\.[a-z\.]{3,}$/;
+  return regex.test(input);
+};
+//Password Verification
+const passwordVerify = (password) => {
+  const regex =
+    /^(?=.+[a-z])(?=.+[A-Z])(?=.+[0-9])(?=.+[\$\%\^\&\!@\#\*\(\)\+\=`~\?\>\<])/;
+  return regex.test(password) && password.length >= 8;
+};
+
+//For empty input - accepts(input,empty error for that input and other errors)
+const emptyUpdate = (
+  inputReference,
+  emptyErrorReference,
+  otherErrorReference
+) => {
+  if (!inputReference.value) {
+    //input is null/empty
+    emptyErrorReference.classList.remove("hide");
+    otherErrorReference.classList.add("hide");
+    inputReference.classList.add("error");
+  } else {
+    //input has some content
+    emptyErrorReference.classList.add("hide");
+  }
+};
+
+//For error styling and displaying error message
+const errorUpdate = (inputReference, errorReference) => {
+  errorReference.classList.remove("hide");
+  inputReference.classList.remove("valid");
+  inputReference.classList.add("error");
+};
+
+//For no errors
+const validInput = (inputReference) => {
+  inputReference.classList.remove("error");
+  inputReference.classList.add("valid");
+};
+
+//First name
+firstNameInput.addEventListener("input", () => {
+  if (textVerify(firstNameInput.value)) {
+    //If verification returns true
+    firstNameError.classList.add("hide");
+    validInput(firstNameInput);
+  } else {
+    //for false
+    errorUpdate(firstNameInput, firstNameError);
+    //empty checker
+    emptyUpdate(firstNameInput, emptyFirstNameError, firstNameError);
+  }
+});
+//middle name
+middleNameInput.addEventListener("input", () => {
+  if (textVerify(middleNameInput.value)) {
+    middleNameError.classList.add("hide");
+    validInput(middleNameInput);
+  } else {
+    errorUpdate(middleNameInput, lastNameError);
+    emptyUpdate(middleNameInput, emptymiddleNameError, middleNameError);
+  }
+});
+
+//Last name
+lastNameInput.addEventListener("input", () => {
+  if (textVerify(lastNameInput.value)) {
+    lastNameError.classList.add("hide");
+    validInput(lastNameInput);
+  } else {
+    errorUpdate(lastNameInput, lastNameError);
+    emptyUpdate(lastNameInput, emptyLastNameError, lastNameError);
+  }
+});
+
+//Phone
+phoneInput.addEventListener("input", () => {
+  if (phoneVerify(phoneInput.value)) {
+    phoneError.classList.add("hide");
+    validInput(phoneInput);
+  } else {
+    errorUpdate(phoneInput, phoneError);
+    emptyUpdate(phoneInput, emptyPhoneError, phoneError);
+  }
+});
+
+//Email
+emailInput.addEventListener("input", () => {
+  if (emailVerify(emailInput.value)) {
+    emailError.classList.add("hide");
+    validInput(emailInput);
+  } else {
+    errorUpdate(emailInput, emailError);
+    emptyUpdate(emailInput, emptyEmailError, emailError);
+  }
+});
+//Submit button
+submitButton.addEventListener("click", () => {
+  if (validClasses.length == 6 && invalidClasses.length == 0) {
+    alert("Success");
+  } else {
+    alert("Error");
+  }
+});
+    </script>
+
+
+
+  </body>
+</html>
